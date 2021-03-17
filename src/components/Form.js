@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { calcularTotal } from '../helpers'
+
 const Form = (props) => {
     
     const [error, guardarError] = useState(false)
@@ -14,17 +15,24 @@ const Form = (props) => {
             guardarError(true)
         }
         guardarError(false)
-        const total = calcularTotal(props.cantidad,props.plazo)
-        //una vez calculado guaramos el total
-        props.guardarTotal(total)
+
+            props.guardarCargando(true)
+
+        setTimeout(() => {
+
+            const total = calcularTotal(props.cantidad,props.plazo)
+            //una vez calculado guaramos el total
+            props.guardarTotal(total)
+            //deshanilitar el spinner
+            props.guardarCargando(false)
+        },3000)
+
     }
 
 
     return ( 
         
         <form  onSubmit={ calcularPrestamo } >
-            {props.cantidad}
-            {props.plazo}
           <div className="row">
               <div>
                   <label>Cantidad Prestamo</label>
