@@ -18,6 +18,11 @@ h1 {
   font-size: 35px;
   font-weight: bold;
 }
+p{
+  text-align: center;
+  color: black;
+
+}
 h2 {
   color: white;
   font-weight: normal;

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-const Form = ({plazo,cantidad, guardarPlazo, guardarCantidad}) => {
+import { calcularTotal } from '../helpers'
+const Form = (props) => {
     
     const [error, guardarError] = useState(false)
 
@@ -9,17 +10,21 @@ const Form = ({plazo,cantidad, guardarPlazo, guardarCantidad}) => {
         console.log('submit')
         e.preventDefault()
         //validar 
-        if(plazo === '' || cantidad === 0){
+        if(props.plazo === '' || props.cantidad === 0){
             guardarError(true)
         }
+        guardarError(false)
+        const total = calcularTotal(props.cantidad,props.plazo)
+        //una vez calculado guaramos el total
+        props.guardarTotal(total)
     }
 
 
     return ( 
         
         <form  onSubmit={ calcularPrestamo } >
-            {cantidad}
-            {plazo}
+            {props.cantidad}
+            {props.plazo}
           <div className="row">
               <div>
                   <label>Cantidad Prestamo</label>
@@ -27,14 +32,14 @@ const Form = ({plazo,cantidad, guardarPlazo, guardarCantidad}) => {
                       className="u-full-width" 
                       type="number" 
                       placeholder="Ejemplo: 3000" 
-                      onChange={ e => guardarCantidad(parseInt( e.target.value )) }
+                      onChange={ e => props.guardarCantidad(parseInt( e.target.value )) }
                   />
               </div>
               <div>
                   <label>Plazo para Pagar</label>
                   <select 
                       className="u-full-width"
-                      onChange={ e => guardarPlazo(parseInt( e.target.value )) }
+                      onChange={ e => props.guardarPlazo(parseInt( e.target.value )) }
                   >
                       <option value="">Seleccionar</option>
                       <option value="3"> 3 meses</option>
